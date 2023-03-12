@@ -130,4 +130,12 @@ export const signInAuthUserWithEmailAndPassword = async (
   }
 };
 
+export const getUserInfo = async (userAuth: UserCredential['user']) => {
+  const userDocRef = doc(db, 'users', userAuth.uid);
+  const userSnapshot = await getDoc(userDocRef);
+  if (userSnapshot.exists()) {
+    return userSnapshot;
+  }
+};
+
 export const signOutUser = async () => signOut(auth);

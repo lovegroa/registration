@@ -5,6 +5,7 @@ import {
   UserCredential,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
 } from 'firebase/auth';
 import {doc, getDoc, getFirestore, setDoc} from 'firebase/firestore';
 import {Sex} from '../routes/sign-up/sign-up.route';
@@ -110,3 +111,5 @@ export const signInAuthUserWithEmailAndPassword = async (
     }
   }
 };
+
+export const signOutUser = async () => signOut(auth);

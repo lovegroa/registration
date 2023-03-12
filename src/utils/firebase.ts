@@ -1,9 +1,10 @@
-import {initializeApp} from 'firebase/app';
+import {FirebaseError, initializeApp} from 'firebase/app';
 import {getDownloadURL, getStorage, ref, uploadBytes} from 'firebase/storage';
 import {
   getAuth,
   UserCredential,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
 } from 'firebase/auth';
 import {doc, getDoc, getFirestore, setDoc} from 'firebase/firestore';
 import {Sex} from '../routes/sign-up/sign-up.route';
@@ -79,5 +80,33 @@ export const uploadImage = async (
     return await getDownloadURL(response.ref);
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const signInAuthUserWithEmailAndPassword = async (
+  email: string,
+  password: string
+) => {
+  if (!email || !password) return;
+  try {
+    const response = await signInWithEmailAndPassword(auth, email, password);
+    if (response) {
+      return response;
+    }
+  } catch (error) {
+    if (error instanceof FirebaseError) {
+      switch (error.code) {
+        case 'auth/wrong-password':
+          alert('Incorrect password');
+          break;
+        case 'auth/user-not-found':
+          alert('User not found');
+          break;
+        default:
+          console.log('user sign in failed', error.message);
+      }
+    } else {
+      console.log('user sign in failed', error);
+    }
   }
 };

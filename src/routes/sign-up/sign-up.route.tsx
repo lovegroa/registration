@@ -1,4 +1,6 @@
-import {ChangeEvent, FormEvent, useState} from 'react';
+import {ChangeEvent, FormEvent, useContext, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {UserContext} from '../../contexts/user.context';
 import {
   createAuthUserWithEmailAndPassword,
   CreateUserDocumentFromAuth,
@@ -41,6 +43,8 @@ export const SignUp = () => {
     dateOfBirth,
     termsOfUse,
   } = formFields;
+  const {setCurrentUser} = useContext(UserContext);
+  const navigate = useNavigate();
 
   const onSubmitHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -74,6 +78,9 @@ export const SignUp = () => {
       imageUrl,
       termsOfUse
     );
+
+    //log user in
+    setCurrentUser(response.user);
   };
 
   const onChangeEventHandler = (
@@ -130,87 +137,98 @@ export const SignUp = () => {
   };
 
   return (
-    <form onSubmit={onSubmitHandler}>
-      <label>Username</label>
-      <input
-        required
-        type="text"
-        name="username"
-        placeholder="Enter your username"
-        value={username}
-        onChange={onChangeEventHandler}
-      ></input>
-      <label>E-mail</label>
-      <input
-        required
-        type="email"
-        name="email"
-        placeholder="Enter your email"
-        value={email}
-        onChange={onChangeEventHandler}
-      ></input>
-      <label>Password</label>
-      <input
-        required
-        type="password"
-        name="password"
-        placeholder="Create a password"
-        value={password}
-        onChange={onChangeEventHandler}
-      ></input>
-      <label>Confirm Password</label>
-      <input
-        required
-        type="password"
-        name="confirmPassword"
-        placeholder="Confirm password"
-        value={confirmPassword}
-        onChange={onChangeEventHandler}
-      ></input>
-      <label>Profile icon</label>
-      <input
-        required
-        type="file"
-        name="profileIcon"
-        accept="image/png, image/jpeg, image/gif"
-        onChange={onChangeEventHandler}
-      ></input>
-      {imagePreview && (
-        <img
-          src={imagePreview}
-          alt="Selected file preview"
-          width="200"
-          height="200"
-        />
-      )}
-      <label>Date of birth</label>
-      <input
-        required
-        type="date"
-        name="dateOfBirth"
-        value={dateOfBirth}
-        max={new Date().toISOString().split('T')[0]}
-        onChange={onChangeEventHandler}
-      ></input>
-      <label>Sex</label>
-      <select required name="sex" value={sex} onChange={onChangeEventHandler}>
-        <option value="" disabled selected hidden>
-          What is your sex?
-        </option>
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-        <option value="prefer not to say">Prefer not to say</option>
-      </select>
-      <label>Terms of Use</label>
-      <input
-        required
-        type="checkbox"
-        name="termsOfUse"
-        checked={termsOfUse}
-        onChange={onChangeEventHandler}
-      ></input>
-      <button type="submit"></button>
-    </form>
+    <>
+      <h1>Sign Up</h1>
+      <form onSubmit={onSubmitHandler}>
+        <label>Username</label>
+        <input
+          required
+          type="text"
+          name="username"
+          placeholder="Enter your username"
+          value={username}
+          onChange={onChangeEventHandler}
+        ></input>
+        <label>E-mail</label>
+        <input
+          required
+          type="email"
+          name="email"
+          placeholder="Enter your email"
+          value={email}
+          onChange={onChangeEventHandler}
+        ></input>
+        <label>Password</label>
+        <input
+          required
+          type="password"
+          name="password"
+          placeholder="Create a password"
+          value={password}
+          onChange={onChangeEventHandler}
+        ></input>
+        <label>Confirm Password</label>
+        <input
+          required
+          type="password"
+          name="confirmPassword"
+          placeholder="Confirm password"
+          value={confirmPassword}
+          onChange={onChangeEventHandler}
+        ></input>
+        <label>Profile icon</label>
+        <input
+          required
+          type="file"
+          name="profileIcon"
+          accept="image/png, image/jpeg, image/gif"
+          onChange={onChangeEventHandler}
+        ></input>
+        {imagePreview && (
+          <img
+            src={imagePreview}
+            alt="Selected file preview"
+            width="200"
+            height="200"
+          />
+        )}
+        <label>Date of birth</label>
+        <input
+          required
+          type="date"
+          name="dateOfBirth"
+          value={dateOfBirth}
+          max={new Date().toISOString().split('T')[0]}
+          onChange={onChangeEventHandler}
+        ></input>
+        <label>Sex</label>
+        <select required name="sex" value={sex} onChange={onChangeEventHandler}>
+          <option value="" disabled selected hidden>
+            What is your sex?
+          </option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="prefer not to say">Prefer not to say</option>
+        </select>
+        <label>Terms of Use</label>
+        <input
+          required
+          type="checkbox"
+          name="termsOfUse"
+          checked={termsOfUse}
+          onChange={onChangeEventHandler}
+        ></input>
+        <button type="submit"></button>
+      </form>
+      <h3
+        style={{cursor: 'pointer'}}
+        onClick={() => {
+          navigate('/sign-in');
+        }}
+      >
+        Registered already? Sign in here
+      </h3>
+    </>
   );
 };
 

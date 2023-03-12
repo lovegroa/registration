@@ -103,7 +103,10 @@ export const signInAuthUserWithEmailAndPassword = async (
   email: string,
   password: string
 ) => {
-  if (!email || !password) return;
+  if (!email || !password) {
+    alert('You must provide an email and password');
+    return null;
+  }
   try {
     const response = await signInWithEmailAndPassword(auth, email, password);
     if (response) {

@@ -58,7 +58,10 @@ export const SignUp = () => {
 
   const onSubmitHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
+    if (password !== confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
     //create account
     const response = await createAuthUserWithEmailAndPassword(email, password);
     if (!response) {

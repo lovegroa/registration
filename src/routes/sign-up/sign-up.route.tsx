@@ -7,6 +7,16 @@ import {
   uploadImage,
 } from '../../utils/firebase';
 
+import {
+  FormContainer,
+  FormWrapper,
+  Input,
+  InputWrapper,
+  Label,
+} from '../../components/form/form.styles';
+import Button from '../../components/button/button.component';
+import {Icon} from '../../components/icon/icon.styles';
+
 export type Sex = 'male' | 'female' | 'prefer not to say' | '';
 
 type DefaultFormFields = {
@@ -87,7 +97,6 @@ export const SignUp = () => {
     event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const {name, value} = event.target;
-    console.log({name, value});
     switch (event.target.name) {
       case 'profileIcon':
         if (
@@ -138,96 +147,137 @@ export const SignUp = () => {
 
   return (
     <>
-      <h1>Sign Up</h1>
-      <form onSubmit={onSubmitHandler}>
-        <label>Username</label>
-        <input
-          required
-          type="text"
-          name="username"
-          placeholder="Enter your username"
-          value={username}
-          onChange={onChangeEventHandler}
-        ></input>
-        <label>E-mail</label>
-        <input
-          required
-          type="email"
-          name="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={onChangeEventHandler}
-        ></input>
-        <label>Password</label>
-        <input
-          required
-          type="password"
-          name="password"
-          placeholder="Create a password"
-          value={password}
-          onChange={onChangeEventHandler}
-        ></input>
-        <label>Confirm Password</label>
-        <input
-          required
-          type="password"
-          name="confirmPassword"
-          placeholder="Confirm password"
-          value={confirmPassword}
-          onChange={onChangeEventHandler}
-        ></input>
-        <label>Profile icon</label>
-        <input
-          required
-          type="file"
-          name="profileIcon"
-          accept="image/png, image/jpeg, image/gif"
-          onChange={onChangeEventHandler}
-        ></input>
-        {imagePreview && (
-          <img
-            src={imagePreview}
-            alt="Selected file preview"
-            width="200"
-            height="200"
-          />
-        )}
-        <label>Date of birth</label>
-        <input
-          required
-          type="date"
-          name="dateOfBirth"
-          value={dateOfBirth}
-          max={new Date().toISOString().split('T')[0]}
-          onChange={onChangeEventHandler}
-        ></input>
-        <label>Sex</label>
-        <select required name="sex" value={sex} onChange={onChangeEventHandler}>
-          <option value="" disabled selected hidden>
-            What is your sex?
-          </option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="prefer not to say">Prefer not to say</option>
-        </select>
-        <label>Terms of Use</label>
-        <input
-          required
-          type="checkbox"
-          name="termsOfUse"
-          checked={termsOfUse}
-          onChange={onChangeEventHandler}
-        ></input>
-        <button type="submit"></button>
-      </form>
-      <h3
-        style={{cursor: 'pointer'}}
-        onClick={() => {
-          navigate('/sign-in');
-        }}
-      >
-        Registered already? Sign in here
-      </h3>
+      <FormContainer>
+        <br />
+        <h1>Sign Up</h1>
+        <br />
+        <FormWrapper onSubmit={onSubmitHandler}>
+          <InputWrapper>
+            <Label>Username</Label>
+            <Input
+              required
+              type="text"
+              name="username"
+              placeholder="Enter your username"
+              value={username}
+              onChange={onChangeEventHandler}
+            ></Input>
+          </InputWrapper>
+          <InputWrapper>
+            <Label>E-mail</Label>
+            <Input
+              required
+              type="email"
+              name="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={onChangeEventHandler}
+            ></Input>
+          </InputWrapper>
+          <InputWrapper>
+            <Label>Password</Label>
+            <Input
+              required
+              type="password"
+              name="password"
+              placeholder="Create a password"
+              value={password}
+              onChange={onChangeEventHandler}
+            ></Input>
+          </InputWrapper>
+          <InputWrapper>
+            <Label>Confirm Password</Label>
+            <Input
+              required
+              type="password"
+              name="confirmPassword"
+              placeholder="Confirm password"
+              value={confirmPassword}
+              onChange={onChangeEventHandler}
+            ></Input>
+          </InputWrapper>
+          <InputWrapper>
+            <Label htmlFor={'profileIcon'}>Profile icon</Label>
+            <Input
+              required
+              type="file"
+              id="profileIcon"
+              name="profileIcon"
+              accept="image/png, image/jpeg, image/gif"
+              onChange={onChangeEventHandler}
+            ></Input>
+            {imagePreview && (
+              <Icon
+                src={imagePreview}
+                alt="Selected file preview"
+                width="200"
+                height="200"
+              />
+            )}
+          </InputWrapper>
+          <InputWrapper>
+            <Label>Date of birth</Label>
+            <Input
+              required
+              type="date"
+              name="dateOfBirth"
+              value={dateOfBirth}
+              max={new Date().toISOString().split('T')[0]}
+              onChange={onChangeEventHandler}
+            ></Input>
+          </InputWrapper>
+          <InputWrapper>
+            <Label>Sex</Label>
+            <select
+              required
+              name="sex"
+              value={sex}
+              onChange={onChangeEventHandler}
+            >
+              <option value="" disabled selected hidden>
+                Please select
+              </option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="prefer not to say">Prefer not to say</option>
+            </select>
+          </InputWrapper>
+          <InputWrapper>
+            <Label>
+              Terms of Use{' '}
+              <a
+                target="_blank"
+                href="https://menherasenpai.notion.site/457df49475494671807673a0a3346451"
+              >
+                (Click here to read)
+              </a>
+            </Label>
+            <div>
+              <Input
+                required
+                type="checkbox"
+                name="termsOfUse"
+                checked={termsOfUse}
+                onChange={onChangeEventHandler}
+                style={{width: 'auto'}}
+              />
+              <span> I agree</span>
+            </div>
+          </InputWrapper>
+
+          <Button text="Sign up" type="submit"></Button>
+        </FormWrapper>
+        <br />
+        <h3
+          style={{cursor: 'pointer'}}
+          onClick={() => {
+            navigate('/sign-in');
+          }}
+        >
+          Registered already? Sign in here
+        </h3>
+        <br />
+      </FormContainer>
     </>
   );
 };

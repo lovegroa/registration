@@ -3,6 +3,15 @@ import {useNavigate} from 'react-router-dom';
 import {UserContext} from '../../contexts/user.context';
 import {signInAuthUserWithEmailAndPassword} from '../../utils/firebase';
 
+import Button from '../../components/button/button.component';
+import {
+  FormContainer,
+  FormWrapper,
+  Input,
+  InputWrapper,
+  Label,
+} from '../../components/form/form.styles';
+
 const defaultFormFields = {
   email: '',
   password: '',
@@ -34,36 +43,44 @@ export default function SignIn() {
 
   return (
     <>
-      <h1>Sign In</h1>
-      <form onSubmit={onSubmitHandler}>
-        <label>E-mail</label>
-        <input
-          required
-          type="email"
-          name="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={onChangeEventHandler}
-        ></input>
-        <label>Password</label>
-        <input
-          required
-          type="password"
-          name="password"
-          placeholder="Create a password"
-          value={password}
-          onChange={onChangeEventHandler}
-        ></input>
-        <button type="submit"></button>
-      </form>
-      <h3
-        style={{cursor: 'pointer'}}
-        onClick={() => {
-          navigate('/sign-up');
-        }}
-      >
-        Not registered? Sign up here
-      </h3>
+      <FormContainer>
+        <h1>Sign In</h1>
+        <br />
+        <FormWrapper onSubmit={onSubmitHandler}>
+          <InputWrapper>
+            <Label>E-mail</Label>
+            <Input
+              required
+              type="email"
+              name="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={onChangeEventHandler}
+            ></Input>
+          </InputWrapper>
+          <InputWrapper>
+            <Label>Password</Label>
+            <Input
+              required
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={onChangeEventHandler}
+            ></Input>
+          </InputWrapper>
+          <Button type="submit" text="Sign in" />
+        </FormWrapper>
+        <br />
+        <h3
+          style={{cursor: 'pointer'}}
+          onClick={() => {
+            navigate('/sign-up');
+          }}
+        >
+          Not registered? Sign up here
+        </h3>
+      </FormContainer>
     </>
   );
 }

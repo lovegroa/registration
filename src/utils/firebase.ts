@@ -32,8 +32,23 @@ export const createAuthUserWithEmailAndPassword = async (
   try {
     return await createUserWithEmailAndPassword(auth, email, password);
   } catch (error) {
-    console.log(error);
-    return;
+    if (error instanceof FirebaseError) {
+      switch (error.code) {
+        case 'auth/email-already-in-use':
+          alert('Email address is already in use.');
+          break;
+        case 'auth/invalid-email':
+          alert('Email address is not valid.');
+          break;
+        case 'auth/weak-password':
+          alert('Password is too weak.');
+          break;
+        default:
+          console.log('Error creating user:', error.message);
+      }
+    } else {
+      console.log('User creation error:', error);
+    }
   }
 };
 

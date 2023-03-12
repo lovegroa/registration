@@ -211,6 +211,7 @@ export const SignUp = () => {
             ></Input>
             {imagePreview && (
               <Icon
+                style={{margin: '10px auto'}}
                 src={imagePreview}
                 alt="Selected file preview"
                 width="200"

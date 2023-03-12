@@ -5,6 +5,7 @@ import {useContext} from 'react';
 import {UserContext} from './contexts/user.context';
 import SignIn from './routes/sign-in/sign-in.route';
 import Homepage from './routes/homepage/homepage.route';
+import Profile from './routes/profile/profile.route';
 
 function App() {
   const {currentUser} = useContext(UserContext);
@@ -13,6 +14,7 @@ function App() {
     <Routes>
       {currentUser ? (
         <>
+          <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<Homepage />} />
         </>
       ) : (

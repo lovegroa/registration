@@ -1,9 +1,9 @@
 import {useEffect} from 'react';
 import Card, {CardType} from '../../components/card/card.component';
 import Navbar from '../../components/nav/nav.component';
-import './homepage.styles.css';
+import {CardContainer, MainContainer} from './homepage.styles';
 
-export default function Homepage() {
+export const Homepage = () => {
   useEffect(() => {
     window.history.pushState({}, '', '/');
   }, []);
@@ -43,11 +43,11 @@ export default function Homepage() {
 
   return (
     <>
-      <main>
-        <Navbar />
+      <Navbar />
+      <MainContainer>
         <br></br>
-        <h1>What's happening</h1>
-        <div className="card-container">
+        <h1 style={{color: 'white'}}>What's happening</h1>
+        <CardContainer>
           {cards.map(
             ({altText, buttonText, description, imageUrl, link, title}) => (
               <Card
@@ -60,8 +60,10 @@ export default function Homepage() {
               />
             )
           )}
-        </div>
-      </main>
+        </CardContainer>
+      </MainContainer>
     </>
   );
-}
+};
+
+export default Homepage;
